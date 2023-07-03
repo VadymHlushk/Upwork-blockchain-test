@@ -24,6 +24,9 @@ import HomePage from 'views/HomePage';
 import LoginPage from 'views/LoginPage';
 import Login from 'views/Login.js';
 import Register from 'views/Register.js';
+import Signwithmetamask from 'views/Signwithmetamask/Signwithmetamask';
+import { Provider } from "react-redux";
+import { store } from './redux/app/store';
 
 import 'assets/scss/black-dashboard-react.scss';
 import 'assets/demo/demo.css';
@@ -38,19 +41,25 @@ import BackgroundColorWrapper from './components/BackgroundColorWrapper/Backgrou
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const isWindows = navigator.platform.includes('Win');
 
-if (isWindows) {
+const isLinux = navigator.platform.includes('Linux');
+console.log(navigator.platform);
+
+if (isWindows || isLinux ) {
   root.render(
     <ThemeContextWrapper>
       <BackgroundColorWrapper>
         <BrowserRouter>
+        <Provider store={store} >
           <Switch>
             <Route path="/home" render={() => <HomePage />} />
             <Route path="/loginpage" render={() => <LoginPage />} />
+            <Route path="/signWithMetamask" render={() => <Signwithmetamask />} />
             <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
             <Route path="/login" render={() => <Login />} />
             <Route path="/register" render={() => <Register />} />
             <Redirect from="*" to="/home" />
           </Switch>
+          </Provider>
         </BrowserRouter>
       </BackgroundColorWrapper>
     </ThemeContextWrapper>
