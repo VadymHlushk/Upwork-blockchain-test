@@ -28,6 +28,9 @@ import Signwithmetamask from 'views/Signwithmetamask/Signwithmetamask';
 import { Provider } from "react-redux";
 import { store } from './redux/app/store';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import 'assets/scss/black-dashboard-react.scss';
 import 'assets/demo/demo.css';
 import 'assets/css/nucleo-icons.css';
@@ -62,6 +65,7 @@ if (isWindows || isLinux ) {
           </Provider>
         </BrowserRouter>
       </BackgroundColorWrapper>
+      <ToastContainer />
     </ThemeContextWrapper>
   );
 } else {

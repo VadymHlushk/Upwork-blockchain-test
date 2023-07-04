@@ -5,27 +5,26 @@ import { Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { SetTheme } from 'redux/features/QuestionSlice';
 import './index.scss';
+import { toast } from 'react-toastify';
 
 function HomePage() {
   const dispatch = useDispatch();
   const Que = useSelector((state) => state.isConnected);
-
-  useEffect(() => {
-    // Check if Metamask is installed
-    if (typeof window.ethereum == 'undefined') {
-      alert('No Metamask!');
-    }
-  }, []);
-
   const connectWallet = async () => {
     try {
-      // Request access to the user's Metamask wallet
       await window.ethereum.request({ method: 'eth_requestAccounts' });
       dispatch(SetTheme(true));
     } catch (error) {
       console.error('Failed to connect to wallet:', error);
     }
   };
+
+  useEffect(() => {
+    if (typeof window.ethereum == 'undefined') {
+      toast.warn('No Metamask!');
+    }
+  }, []);
+
   return (
     <Row className="padding-32">
       <Col xs="4" className="">
@@ -46,7 +45,7 @@ function HomePage() {
         </Link>{' '}
         <span>/</span>
         <Link to="/signWithMetamask" className="margin-12">
-          SignWithMetamask
+          SIGNMETAMASK
         </Link>
       </Col>
       <Col xs="4" className="logo">

@@ -10,33 +10,20 @@ import HomePage from '../../components/Header/index';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { AiOutlineClose } from 'react-icons/ai';
+import { toast } from 'react-toastify';
 
 const Signwithmetamask = () => {
-  // const loginRef = useRef(null);
   const [provider, setProvider] = useState(null);
   const [showdesk, setshowdesk] = useState(false);
   const Que = useSelector((state) => state.isConnected);
-  useEffect(() => {
-    const initializeProvider = async () => {
-      if (Que.theme == true) {
-        const metamaskProvider = new ethers.providers.Web3Provider(window.ethereum);
-        setProvider(metamaskProvider);
-      } else {
-        alert('Please Conneted Metamask');
-        setshowdesk(true);
-      }
-    };
-
-    initializeProvider();
-  }, []);
-
+  
   const handleSignText = async () => {
     try {
-      const textToSign = "Hello, Ai-Blockchain!";
+      const signText = "Hello, Ai-Blockchain!";
 
       if (provider) {
         const signer = provider.getSigner();
-        const signature = await signer.signMessage(textToSign);
+        const signature = await signer.signMessage(signText);
 
         console.log('Signature:', signature);
       } else {
@@ -46,6 +33,21 @@ const Signwithmetamask = () => {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    const initializeProvider = async () => {
+      if (Que.theme == true) {
+        const metamaskProvider = new ethers.providers.Web3Provider(window.ethereum);
+        setProvider(metamaskProvider);
+      } else {
+        toast.warn('Please Conneted Metamask');
+        setshowdesk(true);
+      }
+    };
+
+    initializeProvider();
+  }, []);
+
   return (
     <div className="">
       {showdesk ? (
@@ -68,7 +70,7 @@ const Signwithmetamask = () => {
               <div className="relative">
                 <img src={require('assets/img/login_alert.png')} />
                 <div className="absolute custom-input-content ">
-                  <h2 style={{ background: 'white' }}>Sign with metamask</h2>
+                  <h2 style={{ background: 'white' }}>Sign with Metamask</h2>
                 </div>
                 <div className="absolute login-card ">
                   <div
